@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>TheBrandBird • Department Employees</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        body {
+            background:
+                    radial-gradient(circle at top left, rgba(59,130,246,0.18), transparent 25%),
+                    radial-gradient(circle at bottom right, rgba(14,165,233,0.14), transparent 25%),
+                    #0f172a;
+        }
+
+        .glass {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .table-row {
+            transition: 0.3s ease;
+        }
+
+        .table-row:hover {
+            background: rgba(255,255,255,0.04);
+        }
+
+        .employee-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #0ea5e9, #2563eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: white;
+        }
+
+    </style>
+
+</head>
+
+<body class="min-h-screen text-white">
+
+<div class="p-10">
+
+    <!-- HEADER -->
+
+    <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 mb-12">
+
+        <!-- LEFT -->
+
+        <div>
+
+            <div class="flex items-center gap-4 mb-4">
+
+                <div class="w-16 h-16 rounded-2xl bg-sky-500/20 border border-sky-400/20 flex items-center justify-center text-3xl">
+
+                    🏢
+
+                </div>
+
+                <div>
+
+                    <h1 class="text-5xl font-bold break-words">
+
+                        [[${department}]]
+
+                    </h1>
+
+                    <p class="text-slate-400 text-lg mt-2">
+
+                        Department Employees & Workforce Analytics
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="flex items-center gap-5">
+
+            <!-- TOTAL EMPLOYEES -->
+
+            <div class="glass px-8 py-5 rounded-2xl">
+
+                <p class="text-slate-400 text-sm mb-2">
+                    Total Employees
+                </p>
+
+                <h2 class="text-4xl font-bold text-sky-300">
+
+                    [[${#lists.size(employees)}]]
+
+                </h2>
+
+            </div>
+
+            <!-- BACK BUTTON -->
+
+            <a href="/admin/departments"
+               class="bg-gradient-to-r from-sky-500 to-blue-600 hover:scale-105 transition px-7 py-4 rounded-2xl font-semibold shadow-2xl">
+
+                ← Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- TABLE CONTAINER -->
+
+    <div class="glass rounded-3xl overflow-hidden shadow-2xl">
+
+        <!-- TOP BAR -->
+
+        <div class="p-8 border-b border-white/10 flex flex-col lg:flex-row lg:justify-between lg:items-center gap-5">
+
+            <div>
+
+                <h2 class="text-3xl font-bold mb-2">
+                    Employee Directory
+                </h2>
+
+                <p class="text-slate-400">
+                    View and manage employees within this department.
+                </p>
+
+            </div>
+
+            <!-- SEARCH -->
+
+            <div class="relative">
+
+                <input type="text"
+                       placeholder="Search employees..."
+                       class="bg-white/5 border border-white/10 rounded-2xl px-5 py-3 pl-12 text-white placeholder-slate-400 focus:outline-none focus:border-sky-400 w-72">
+
+                <span class="absolute left-4 top-3.5 text-slate-400">
+                    🔍
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- TABLE -->
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full">
+
+                <thead class="bg-white/5 text-slate-300">
+
+                <tr>
+
+                    <th class="p-6 text-left font-semibold">
+                        Employee
+                    </th>
+
+                    <th class="p-6 text-left font-semibold">
+                        Email Address
+                    </th>
+
+                    <th class="p-6 text-left font-semibold">
+                        Salary
+                    </th>
+
+                    <th class="p-6 text-left font-semibold">
+                        Actions
+                    </th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <!-- EMPLOYEE ROW -->
+
+                <tr th:each="emp : ${employees}"
+                    class="table-row border-b border-white/5">
+
+                    <!-- EMPLOYEE -->
+
+                    <td class="p-6">
+
+                        <div class="flex items-center gap-4">
+
+                            <!-- AVATAR -->
+
+                            <div class="employee-avatar">
+
+                                [[${#strings.substring(emp.name,0,1)}]]
+
+                            </div>
+
+                            <!-- NAME -->
+
+                            <div>
+
+                                <h3 class="font-semibold text-lg"
+                                    th:text="${emp.name}">
+                                </h3>
+
+                                <p class="text-slate-400 text-sm">
+                                    Employee
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <!-- EMAIL -->
+
+                    <td class="p-6 text-slate-300"
+                        th:text="${emp.email}">
+                    </td>
+
+                    <!-- SALARY -->
+
+                    <td class="p-6">
+
+                        <span class="bg-green-500/20 text-green-300 border border-green-400/20 px-4 py-2 rounded-full text-sm font-semibold">
+
+                            ₹ [[${emp.salary}]]
+
+                        </span>
+
+                    </td>
+
+                    <!-- ACTIONS -->
+
+                    <td class="p-6">
+
+                        <a th:href="@{/admin/employee/{id}(id=${emp.id})}"
+                           class="inline-flex items-center gap-3 bg-gradient-to-r from-sky-500 to-blue-600 hover:scale-105 transition px-5 py-3 rounded-2xl font-semibold shadow-xl">
+
+                            View Details
+                            <span>→</span>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                <!-- EMPTY STATE -->
+
+                <tr th:if="${#lists.isEmpty(employees)}">
+
+                    <td colspan="4"
+                        class="text-center p-16 text-slate-400 text-lg">
+
+                        No employees found in this department.
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

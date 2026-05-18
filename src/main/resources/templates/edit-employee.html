@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>TheBrandBird • Edit Employee</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        body {
+            background:
+                    radial-gradient(circle at top left, rgba(59,130,246,0.20), transparent 25%),
+                    radial-gradient(circle at bottom right, rgba(14,165,233,0.14), transparent 25%),
+                    #0f172a;
+        }
+
+        .glass {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .input-style {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: white;
+            transition: 0.3s ease;
+        }
+
+        .input-style::placeholder {
+            color: #94a3b8;
+        }
+
+        .input-style:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 4px rgba(56,189,248,0.15);
+        }
+
+        .floating-card {
+            box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+        }
+
+    </style>
+
+</head>
+
+<body class="min-h-screen text-white">
+
+<div class="container mx-auto px-6 py-12">
+
+    <!-- HEADER -->
+
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10">
+
+        <div>
+
+            <h1 class="text-5xl font-bold mb-3">
+                Edit Employee
+            </h1>
+
+            <p class="text-slate-400 text-lg">
+                Update employee information and manage profile settings.
+            </p>
+
+        </div>
+
+        <a href="/admin/dashboard"
+           class="bg-gradient-to-r from-sky-500 to-blue-600 hover:scale-105 transition px-7 py-4 rounded-2xl font-semibold shadow-2xl text-center">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
+
+    <!-- FORM CONTAINER -->
+
+    <div class="max-w-5xl mx-auto glass floating-card rounded-3xl p-10">
+
+        <!-- BRAND -->
+
+        <div class="mb-12 text-center">
+
+            <h2 class="text-4xl font-bold flex justify-center items-center gap-2">
+
+                TheBrandBird
+                <span class="text-sky-400 text-5xl">✦</span>
+
+            </h2>
+
+            <p class="text-slate-400 mt-3">
+                Employee Management CMS
+            </p>
+
+        </div>
+
+        <!-- FORM -->
+
+        <form th:action="@{/admin/update}"
+              th:object="${employee}"
+              method="post"
+              enctype="multipart/form-data">
+
+            <input type="hidden"
+                   th:field="*{id}">
+
+            <!-- GRID -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- NAME -->
+
+                <div>
+
+                    <label class="block text-slate-300 mb-3 font-medium">
+                        Full Name
+                    </label>
+
+                    <input type="text"
+                           th:field="*{name}"
+                           placeholder="Enter employee name"
+                           class="input-style w-full p-4 rounded-2xl">
+
+                </div>
+
+                <!-- EMAIL -->
+
+                <div>
+
+                    <label class="block text-slate-300 mb-3 font-medium">
+                        Email Address
+                    </label>
+
+                    <input type="email"
+                           th:field="*{email}"
+                           placeholder="Enter email address"
+                           class="input-style w-full p-4 rounded-2xl">
+
+                </div>
+
+                <!-- PASSWORD -->
+
+                <div>
+
+                    <label class="block text-slate-300 mb-3 font-medium">
+                        Password
+                    </label>
+
+                    <input type="password"
+                           th:field="*{password}"
+                           placeholder="Enter password"
+                           class="input-style w-full p-4 rounded-2xl">
+
+                </div>
+
+                <!-- ROLE -->
+
+                <div>
+
+                    <label class="block text-slate-300 mb-3 font-medium">
+                        Role
+                    </label>
+
+                    <input type="text"
+                           th:field="*{role}"
+                           placeholder="Employee role"
+                           class="input-style w-full p-4 rounded-2xl">
+
+                </div>
+
+                <!-- DEPARTMENT -->
+
+                <div>
+
+                    <label class="block text-slate-300 mb-3 font-medium">
+                        Department
+                    </label>
+
+                    <select th:field="*{department}"
+                            class="input-style w-full p-4 rounded-2xl">
+
+                        <option value="" class="bg-slate-900">
+                            Select Department
+                        </option>
+
+                        <option value="DEVELOPMENT" class="bg-slate-900">
+                            Development
+                        </option>
+
+                        <option value="UI_UX_DESIGN" class="bg-slate-900">
+                            UI/UX Design
+                        </option>
+
+                        <option value="DIGITAL_MARKETING" class="bg-slate-900">
+                            Digital Marketing
+                        </option>
+
+                        <option value="SEO" class="bg-slate-900">
+                            SEO
+                        </option>
+
+                        <option value="CONTENT_CREATION" class="bg-slate-900">
+                            Content Creation
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- SALARY -->
+
+                <div>
+
+                    <label class="block text-slate-300 mb-3 font-medium">
+                        Salary
+                    </label>
+
+                    <input type="number"
+                           th:field="*{salary}"
+                           placeholder="Enter salary"
+                           class="input-style w-full p-4 rounded-2xl">
+
+                </div>
+
+                <!-- PHONE -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-slate-300 mb-3 font-medium">
+                        Phone Number
+                    </label>
+
+                    <input type="text"
+                           th:field="*{phone}"
+                           placeholder="Enter phone number"
+                           class="input-style w-full p-4 rounded-2xl">
+
+                </div>
+
+            </div>
+
+            <!-- PROFILE IMAGE -->
+
+            <div class="glass rounded-3xl p-8 mt-10">
+
+                <h2 class="text-2xl font-bold mb-8">
+                    Profile Image
+                </h2>
+
+                <div class="flex flex-col lg:flex-row items-center gap-10">
+
+                    <!-- IMAGE PREVIEW -->
+
+                    <div class="relative">
+
+                        <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-sky-400 shadow-2xl">
+
+                            <img id="previewImage"
+
+                                 th:if="${employee.profileImage != null}"
+
+                                 th:src="'data:image/jpeg;base64,' + ${employee.profileImageBase64}"
+
+                                 class="w-full h-full object-cover">
+
+                        </div>
+
+                        <div class="absolute bottom-3 right-3 w-6 h-6 rounded-full bg-green-400 border-4 border-slate-900"></div>
+
+                    </div>
+
+                    <!-- FILE INPUT -->
+
+                    <div class="flex-1 w-full">
+
+                        <label class="block text-slate-300 mb-4 font-medium">
+
+                            Upload New Image
+
+                        </label>
+
+                        <input type="file"
+                               name="imageFile"
+                               accept="image/*"
+                               onchange="previewFile(event)"
+                               class="input-style w-full p-4 rounded-2xl">
+
+                        <p class="text-slate-400 text-sm mt-4">
+
+                            Upload a professional employee profile image.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BUTTON -->
+
+            <button type="submit"
+                    class="mt-10 bg-gradient-to-r from-sky-500 to-blue-600 hover:scale-[1.02] transition-all duration-300 text-white w-full py-5 rounded-2xl font-semibold text-lg shadow-2xl">
+
+                Update Employee
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+    function previewFile(event) {
+
+        const reader = new FileReader();
+
+        reader.onload = function() {
+
+            const output =
+                document.getElementById(
+                    'previewImage'
+                );
+
+            output.src =
+                reader.result;
+        };
+
+        reader.readAsDataURL(
+            event.target.files[0]
+        );
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>TheBrandBird • Employee Details</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        body {
+            background:
+                    radial-gradient(circle at top left, rgba(59,130,246,0.18), transparent 25%),
+                    radial-gradient(circle at bottom right, rgba(14,165,233,0.14), transparent 25%),
+                    #0f172a;
+        }
+
+        .glass {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .card-hover {
+            transition: 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56,189,248,0.4);
+        }
+
+        .nav-link {
+            transition: 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateX(4px);
+        }
+
+        .table-row {
+            transition: 0.3s ease;
+        }
+
+        .table-row:hover {
+            background: rgba(255,255,255,0.04);
+        }
+
+    </style>
+
+</head>
+
+<body class="min-h-screen text-white">
+
+<div class="flex">
+
+    <!-- SIDEBAR -->
+
+    <aside class="w-72 min-h-screen glass border-r border-white/10 p-8 relative">
+
+        <!-- BRAND -->
+
+        <div class="mb-14">
+
+            <h1 class="text-3xl font-bold flex items-center gap-2">
+                TheBrandBird
+                <span class="text-sky-400 text-4xl">✦</span>
+            </h1>
+
+            <p class="text-slate-400 text-sm mt-2">
+                Enterprise CMS Dashboard
+            </p>
+
+        </div>
+
+        <!-- NAVIGATION -->
+
+        <nav class="space-y-3">
+
+            <a href="/admin/dashboard"
+               class="nav-link flex items-center gap-3 py-4 px-5 rounded-xl text-slate-300">
+
+                <span>📊</span>
+                Dashboard
+            </a>
+
+            <a href="/admin/departments"
+               class="flex items-center gap-3 py-4 px-5 rounded-xl bg-sky-500/20 border border-sky-400/30 text-sky-300">
+
+                <span>🏢</span>
+                Departments
+            </a>
+
+            <a href="/admin/reports"
+               class="nav-link flex items-center gap-3 py-4 px-5 rounded-xl text-slate-300">
+
+                <span>📈</span>
+                Reports
+            </a>
+
+        </nav>
+
+        <!-- FOOTER -->
+
+        <div class="absolute bottom-8 left-8 text-slate-500 text-sm">
+
+            © 2026 TheBrandBird
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+
+    <main class="flex-1 p-10">
+
+        <!-- TOP HEADER -->
+
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 mb-10">
+
+            <div class="flex items-center gap-8">
+
+                <!-- PROFILE IMAGE -->
+
+                <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-sky-400 shadow-2xl">
+
+                    <img th:if="${employee.profileImage != null}"
+                         th:src="'data:image/jpeg;base64,' + ${employee.profileImageBase64}"
+                         class="w-full h-full object-cover">
+
+                </div>
+
+                <!-- EMPLOYEE INFO -->
+
+                <div>
+
+                    <h1 class="text-5xl font-bold mb-3"
+                        th:text="${employee.name}">
+                    </h1>
+
+                    <p class="text-slate-400 text-lg mb-5">
+                        Employee Details & Analytics
+                    </p>
+
+                    <div class="flex flex-wrap gap-3">
+
+                        <span class="bg-sky-500/20 text-sky-300 px-4 py-2 rounded-full border border-sky-400/20 text-sm font-semibold">
+
+                            [[${employee.department}]]
+
+                        </span>
+
+                        <span class="bg-green-500/20 text-green-300 px-4 py-2 rounded-full border border-green-400/20 text-sm font-semibold">
+
+                            Active Employee
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BACK BUTTON -->
+
+            <a href="/admin/departments"
+               class="bg-gradient-to-r from-sky-500 to-blue-600 hover:scale-105 transition px-7 py-4 rounded-2xl font-semibold shadow-2xl text-center">
+
+                ← Back
+
+            </a>
+
+        </div>
+
+        <!-- PROFILE DETAILS -->
+
+        <div class="glass rounded-3xl p-8 mb-10 shadow-2xl">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+                <!-- EMAIL -->
+
+                <div class="glass rounded-2xl p-6 card-hover">
+
+                    <p class="text-slate-400 mb-3">
+                        Email Address
+                    </p>
+
+                    <h2 class="text-xl font-semibold break-words"
+                        th:text="${employee.email}">
+                    </h2>
+
+                </div>
+
+                <!-- DEPARTMENT -->
+
+                <div class="glass rounded-2xl p-6 card-hover">
+
+                    <p class="text-slate-400 mb-3">
+                        Department
+                    </p>
+
+                    <h2 class="text-xl font-semibold"
+                        th:text="${employee.department}">
+                    </h2>
+
+                </div>
+
+                <!-- PHONE -->
+
+                <div class="glass rounded-2xl p-6 card-hover">
+
+                    <p class="text-slate-400 mb-3">
+                        Phone Number
+                    </p>
+
+                    <h2 class="text-xl font-semibold"
+                        th:text="${employee.phone}">
+                    </h2>
+
+                </div>
+
+                <!-- SALARY -->
+
+                <div class="glass rounded-2xl p-6 card-hover">
+
+                    <p class="text-slate-400 mb-3">
+                        Salary
+                    </p>
+
+                    <h2 class="text-3xl font-bold text-green-400">
+
+                        ₹ [[${employee.salary}]]
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ANALYTICS CARDS -->
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+
+            <!-- APPROVED -->
+
+            <div class="glass rounded-3xl p-8 shadow-2xl card-hover">
+
+                <p class="text-slate-400 mb-4">
+                    Approved Leaves
+                </p>
+
+                <h2 class="text-6xl font-bold text-green-400">
+
+                    [[${approvedLeaves}]]
+
+                </h2>
+
+            </div>
+
+            <!-- PENDING -->
+
+            <div class="glass rounded-3xl p-8 shadow-2xl card-hover">
+
+                <p class="text-slate-400 mb-4">
+                    Pending Leaves
+                </p>
+
+                <h2 class="text-6xl font-bold text-yellow-400">
+
+                    [[${pendingLeaves}]]
+
+                </h2>
+
+            </div>
+
+            <!-- REJECTED -->
+
+            <div class="glass rounded-3xl p-8 shadow-2xl card-hover">
+
+                <p class="text-slate-400 mb-4">
+                    Rejected Leaves
+                </p>
+
+                <h2 class="text-6xl font-bold text-red-400">
+
+                    [[${rejectedLeaves}]]
+
+                </h2>
+
+            </div>
+
+        </div>
+
+        <!-- LEAVE HISTORY -->
+
+        <div class="glass rounded-3xl overflow-hidden shadow-2xl">
+
+            <!-- TABLE HEADER -->
+
+            <div class="p-8 border-b border-white/10">
+
+                <h2 class="text-3xl font-bold">
+                    Leave History
+                </h2>
+
+                <p class="text-slate-400 mt-2">
+                    Complete leave analytics and request records.
+                </p>
+
+            </div>
+
+            <!-- TABLE -->
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full">
+
+                    <thead class="bg-white/5 text-slate-300">
+
+                    <tr>
+
+                        <th class="p-6 text-left font-semibold">
+                            Reason
+                        </th>
+
+                        <th class="p-6 text-left font-semibold">
+                            Start Date
+                        </th>
+
+                        <th class="p-6 text-left font-semibold">
+                            End Date
+                        </th>
+
+                        <th class="p-6 text-left font-semibold">
+                            Status
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="leave : ${leaves}"
+                        class="table-row border-b border-white/5">
+
+                        <!-- REASON -->
+
+                        <td class="p-6 text-slate-200 font-medium"
+                            th:text="${leave.reason}">
+                        </td>
+
+                        <!-- START DATE -->
+
+                        <td class="p-6 text-slate-300"
+                            th:text="${leave.startDate}">
+                        </td>
+
+                        <!-- END DATE -->
+
+                        <td class="p-6 text-slate-300"
+                            th:text="${leave.endDate}">
+                        </td>
+
+                        <!-- STATUS -->
+
+                        <td class="p-6">
+
+                            <!-- APPROVED -->
+
+                            <span th:if="${leave.status == 'APPROVED'}"
+                                  class="bg-green-500/20 text-green-300 border border-green-400/20 px-4 py-2 rounded-full text-sm font-semibold">
+
+                                APPROVED
+
+                            </span>
+
+                            <!-- PENDING -->
+
+                            <span th:if="${leave.status == 'PENDING'}"
+                                  class="bg-yellow-500/20 text-yellow-300 border border-yellow-400/20 px-4 py-2 rounded-full text-sm font-semibold">
+
+                                PENDING
+
+                            </span>
+
+                            <!-- REJECTED -->
+
+                            <span th:if="${leave.status == 'REJECTED'}"
+                                  class="bg-red-500/20 text-red-300 border border-red-400/20 px-4 py-2 rounded-full text-sm font-semibold">
+
+                                REJECTED
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

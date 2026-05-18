@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>TheBrandBird • Departments</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        body {
+            background:
+                    radial-gradient(circle at top left, rgba(59,130,246,0.20), transparent 25%),
+                    radial-gradient(circle at bottom right, rgba(14,165,233,0.14), transparent 25%),
+                    #0f172a;
+        }
+
+        .glass {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .card-hover {
+            transition: 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-6px);
+            border-color: rgba(56,189,248,0.4);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+
+        .nav-link {
+            transition: 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateX(4px);
+        }
+
+        .department-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            font-size: 28px;
+            background: rgba(56,189,248,0.12);
+            border: 1px solid rgba(56,189,248,0.2);
+        }
+
+    </style>
+
+</head>
+
+<body class="min-h-screen text-white">
+
+<div class="flex">
+
+    <!-- SIDEBAR -->
+
+    <aside class="w-72 min-h-screen glass border-r border-white/10 p-8 relative">
+
+        <!-- BRAND -->
+
+        <div class="mb-14">
+
+            <h1 class="text-3xl font-bold flex items-center gap-2">
+
+                TheBrandBird
+                <span class="text-sky-400 text-4xl">✦</span>
+
+            </h1>
+
+            <p class="text-slate-400 text-sm mt-2">
+                Enterprise CMS Dashboard
+            </p>
+
+        </div>
+
+        <!-- NAVIGATION -->
+
+        <nav class="space-y-3">
+
+            <a href="/admin/dashboard"
+               class="nav-link flex items-center gap-3 py-4 px-5 rounded-xl text-slate-300">
+
+                <span>📊</span>
+                Dashboard
+            </a>
+
+            <a href="/admin/departments"
+               class="flex items-center gap-3 py-4 px-5 rounded-xl bg-sky-500/20 border border-sky-400/30 text-sky-300">
+
+                <span>🏢</span>
+                Departments
+            </a>
+
+        </nav>
+
+        <!-- FOOTER -->
+
+        <div class="absolute bottom-8 left-8 text-slate-500 text-sm">
+
+            © 2026 TheBrandBird
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+
+    <main class="flex-1 p-10">
+
+        <!-- HEADER -->
+
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 mb-12">
+
+            <div>
+
+                <h1 class="text-5xl font-bold mb-4">
+                    Departments
+                </h1>
+
+                <p class="text-slate-400 text-lg">
+                    Department management, employee analytics and workforce overview.
+                </p>
+
+            </div>
+
+            <div class="glass px-8 py-5 rounded-2xl">
+
+                <p class="text-slate-400 text-sm mb-2">
+                    Total Departments
+                </p>
+
+                <h2 class="text-4xl font-bold text-sky-300">
+
+                    [[${#lists.size(departments)}]]
+
+                </h2>
+
+            </div>
+
+        </div>
+
+        <!-- DEPARTMENT GRID -->
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+
+            <!-- CARD -->
+
+            <div th:each="dept : ${departments}"
+                 class="glass rounded-3xl p-8 card-hover relative overflow-hidden">
+
+                <!-- GLOW EFFECT -->
+
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-sky-500/10 rounded-full blur-3xl"></div>
+
+                <!-- TOP -->
+
+                <div class="flex items-start justify-between mb-8 relative z-10">
+
+                    <!-- ICON -->
+
+                    <div class="department-icon">
+
+                        <span th:if="${dept == 'DEVELOPMENT'}">💻</span>
+
+                        <span th:if="${dept == 'UI_UX_DESIGN'}">🎨</span>
+
+                        <span th:if="${dept == 'DIGITAL_MARKETING'}">📈</span>
+
+                        <span th:if="${dept == 'SEO'}">🔍</span>
+
+                        <span th:if="${dept == 'CONTENT_CREATION'}">✍️</span>
+
+                    </div>
+
+                    <!-- EMP COUNT -->
+
+                    <div class="bg-sky-500/20 border border-sky-400/20 text-sky-300 px-4 py-2 rounded-full text-sm font-semibold">
+
+                        [[${employeeRepository.countByDepartment(dept)}]]
+                        Employees
+
+                    </div>
+
+                </div>
+
+                <!-- DEPT NAME -->
+
+                <div class="relative z-10">
+
+                    <h2 class="text-3xl font-bold mb-4 break-words"
+                        th:text="${dept}">
+                    </h2>
+
+                    <p class="text-slate-400 leading-relaxed mb-8">
+
+                        Manage employees, track department analytics and monitor organizational growth.
+
+                    </p>
+
+                </div>
+
+                <!-- BUTTON -->
+
+                <a th:href="@{/admin/departments/{dept}(dept=${dept})}"
+                   class="relative z-10 inline-flex items-center gap-3 bg-gradient-to-r from-sky-500 to-blue-600 hover:scale-105 transition px-6 py-4 rounded-2xl font-semibold shadow-2xl">
+
+                    View Employees
+                    <span>→</span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

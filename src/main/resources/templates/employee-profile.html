@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>TheBrandBird • Employee Profile</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        body {
+            background:
+                    radial-gradient(circle at top left, rgba(59,130,246,0.20), transparent 25%),
+                    radial-gradient(circle at bottom right, rgba(14,165,233,0.15), transparent 25%),
+                    #0f172a;
+        }
+
+        .glass {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(56,189,248,0.4);
+        }
+
+        .nav-link {
+            transition: 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateX(4px);
+        }
+
+    </style>
+
+</head>
+
+<body class="min-h-screen text-white">
+
+<div class="flex">
+
+    <!-- SIDEBAR -->
+
+    <aside class="w-72 min-h-screen glass p-8 border-r border-white/10">
+
+        <!-- BRAND -->
+
+        <div class="mb-14">
+
+            <h1 class="text-3xl font-bold flex items-center gap-2">
+                TheBrandBird
+                <span class="text-sky-400 text-4xl">✦</span>
+            </h1>
+
+            <p class="text-slate-400 text-sm mt-2">
+                Employee Management CMS
+            </p>
+
+        </div>
+
+        <!-- PROFILE MINI -->
+
+        <div class="glass rounded-2xl p-5 mb-10">
+
+            <div class="flex items-center gap-4">
+
+                <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-sky-400">
+
+                    <img th:if="${employee.profileImage != null}"
+                         th:src="'data:image/jpeg;base64,' + ${employee.profileImageBase64}"
+                         class="w-full h-full object-cover">
+
+                </div>
+
+                <div>
+
+                    <h2 class="font-semibold text-lg"
+                        th:text="${employee.name}">
+                    </h2>
+
+                    <p class="text-slate-400 text-sm"
+                       th:text="${employee.role}">
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- NAVIGATION -->
+
+        <nav class="space-y-3">
+
+            <a href="/employee/dashboard"
+               class="nav-link flex items-center gap-3 py-4 px-5 rounded-xl text-slate-300">
+
+                <span>📊</span>
+                Dashboard
+            </a>
+
+            <a href="/employee/profile"
+               class="flex items-center gap-3 py-4 px-5 rounded-xl bg-sky-500/20 border border-sky-400/30 text-sky-300">
+
+                <span>👤</span>
+                My Profile
+            </a>
+
+            <a href="/employee/leaves"
+               class="nav-link flex items-center gap-3 py-4 px-5 rounded-xl text-slate-300">
+
+                <span>📅</span>
+                My Leaves
+            </a>
+
+        </nav>
+
+        <!-- FOOTER -->
+
+        <div class="absolute bottom-8 left-8 text-slate-500 text-sm">
+
+            © 2026 TheBrandBird
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+
+    <main class="flex-1 p-10">
+
+        <!-- TOP HEADER -->
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
+
+            <div>
+
+                <h1 class="text-5xl font-bold mb-3">
+                    Employee Profile
+                </h1>
+
+                <p class="text-slate-400 text-lg">
+                    Manage and view your professional information.
+                </p>
+
+            </div>
+
+            <button class="mt-5 md:mt-0 bg-gradient-to-r from-sky-500 to-blue-600 hover:scale-105 transition px-6 py-3 rounded-xl font-semibold shadow-xl">
+
+                Edit Profile
+
+            </button>
+
+        </div>
+
+        <!-- PROFILE CARD -->
+
+        <div class="glass rounded-3xl p-10 shadow-2xl">
+
+            <!-- HEADER -->
+
+            <div class="flex flex-col lg:flex-row items-center gap-10 mb-14">
+
+                <!-- IMAGE -->
+
+                <div class="relative">
+
+                    <div class="w-52 h-52 rounded-full overflow-hidden border-4 border-sky-400 shadow-2xl">
+
+                        <img th:if="${employee.profileImage != null}"
+                             th:src="'data:image/jpeg;base64,' + ${employee.profileImageBase64}"
+                             class="w-full h-full object-cover">
+
+                    </div>
+
+                    <div class="absolute bottom-3 right-3 w-6 h-6 rounded-full bg-green-400 border-4 border-slate-900"></div>
+
+                </div>
+
+                <!-- INFO -->
+
+                <div>
+
+                    <h1 class="text-6xl font-bold mb-3 tracking-tight"
+                        th:text="${employee.name}">
+                    </h1>
+
+                    <p class="text-sky-300 text-2xl font-medium"
+                       th:text="${employee.role}">
+                    </p>
+
+                    <div class="mt-6 flex flex-wrap gap-4">
+
+                        <span class="bg-sky-500/20 text-sky-300 px-5 py-2 rounded-full border border-sky-400/20 text-sm font-semibold">
+
+                            [[${employee.department}]]
+
+                        </span>
+
+                        <span class="bg-green-500/20 text-green-300 px-5 py-2 rounded-full border border-green-400/20 text-sm font-semibold">
+
+                            Active Employee
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- DETAILS GRID -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+                <!-- EMAIL -->
+
+                <div class="card rounded-2xl p-7">
+
+                    <p class="text-slate-400 mb-3">
+                        Email Address
+                    </p>
+
+                    <h2 class="text-xl font-semibold break-words"
+                        th:text="${employee.email}">
+                    </h2>
+
+                </div>
+
+                <!-- PHONE -->
+
+                <div class="card rounded-2xl p-7">
+
+                    <p class="text-slate-400 mb-3">
+                        Phone Number
+                    </p>
+
+                    <h2 class="text-xl font-semibold"
+                        th:text="${employee.phone}">
+                    </h2>
+
+                </div>
+
+                <!-- DEPARTMENT -->
+
+                <div class="card rounded-2xl p-7">
+
+                    <p class="text-slate-400 mb-3">
+                        Department
+                    </p>
+
+                    <h2 class="text-xl font-semibold"
+                        th:text="${employee.department}">
+                    </h2>
+
+                </div>
+
+                <!-- SALARY -->
+
+                <div class="card rounded-2xl p-7">
+
+                    <p class="text-slate-400 mb-3">
+                        Salary
+                    </p>
+
+                    <h2 class="text-3xl font-bold text-green-400">
+
+                        ₹ [[${employee.salary}]]
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

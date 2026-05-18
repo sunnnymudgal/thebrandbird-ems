@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>TheBrandBird • Apply Leave</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        body {
+            background:
+                    radial-gradient(circle at top left, rgba(59,130,246,0.22), transparent 25%),
+                    radial-gradient(circle at bottom right, rgba(14,165,233,0.16), transparent 25%),
+                    #0f172a;
+        }
+
+        .glass {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .input-style {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: white;
+            transition: 0.3s ease;
+        }
+
+        .input-style::placeholder {
+            color: #94a3b8;
+        }
+
+        .input-style:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 4px rgba(56,189,248,0.15);
+        }
+
+    </style>
+
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-6 text-white">
+
+<!-- MAIN CONTAINER -->
+
+<div class="w-full max-w-6xl grid lg:grid-cols-2 rounded-3xl overflow-hidden shadow-2xl glass">
+
+    <!-- LEFT SIDE -->
+
+    <div class="hidden lg:flex flex-col justify-between p-14 relative overflow-hidden">
+
+        <!-- GLOW -->
+
+        <div class="absolute -top-20 -left-20 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl"></div>
+
+        <!-- BRAND -->
+
+        <div class="relative z-10">
+
+            <h1 class="text-4xl font-bold flex items-center gap-3">
+
+                TheBrandBird
+                <span class="text-sky-400 text-5xl">✦</span>
+
+            </h1>
+
+            <p class="text-slate-400 mt-5 text-lg leading-relaxed">
+
+                Smart Employee Management &
+                Leave Tracking Platform.
+
+            </p>
+
+        </div>
+
+        <!-- INFO -->
+
+        <div class="space-y-6 relative z-10">
+
+            <!-- CARD -->
+
+            <div class="glass rounded-2xl p-6">
+
+                <div class="flex items-start gap-4">
+
+                    <div class="w-14 h-14 rounded-2xl bg-sky-500/20 border border-sky-400/20 flex items-center justify-center text-2xl">
+
+                        📅
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-xl font-semibold mb-2">
+                            Easy Leave Requests
+                        </h3>
+
+                        <p class="text-slate-400">
+                            Submit and manage employee leave applications instantly.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+
+            <div class="glass rounded-2xl p-6">
+
+                <div class="flex items-start gap-4">
+
+                    <div class="w-14 h-14 rounded-2xl bg-green-500/20 border border-green-400/20 flex items-center justify-center text-2xl">
+
+                        ⚡
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-xl font-semibold mb-2">
+                            Fast Approvals
+                        </h3>
+
+                        <p class="text-slate-400">
+                            HR and Admin teams can review requests efficiently.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+
+            <div class="glass rounded-2xl p-6">
+
+                <div class="flex items-start gap-4">
+
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-400/20 flex items-center justify-center text-2xl">
+
+                        🚀
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-xl font-semibold mb-2">
+                            Enterprise Experience
+                        </h3>
+
+                        <p class="text-slate-400">
+                            Premium workforce management built with modern UI systems.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+
+        <div class="text-slate-500 text-sm relative z-10">
+
+            © 2026 TheBrandBird
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE FORM -->
+
+    <div class="p-10 lg:p-14 flex items-center">
+
+        <div class="w-full">
+
+            <!-- HEADER -->
+
+            <div class="mb-10">
+
+                <p class="text-sky-400 uppercase tracking-widest text-sm font-semibold mb-3">
+
+                    Employee Portal
+
+                </p>
+
+                <h2 class="text-5xl font-bold mb-4">
+
+                    Apply Leave
+
+                </h2>
+
+                <p class="text-slate-400 text-lg">
+
+                    Submit your leave request and track approvals seamlessly.
+
+                </p>
+
+            </div>
+
+            <!-- FORM -->
+
+            <form th:action="@{/leave/save}"
+                  th:object="${leaveRequest}"
+                  method="post"
+                  class="space-y-6">
+
+                <!-- NAME -->
+
+                <div>
+
+                    <label class="block text-slate-300 mb-3 font-medium">
+
+                        Employee Name
+
+                    </label>
+
+                    <input type="text"
+                           th:field="*{employeeName}"
+                           placeholder="Enter employee name"
+                           class="input-style w-full p-4 rounded-2xl">
+
+                </div>
+
+                <!-- REASON -->
+
+                <div>
+
+                    <label class="block text-slate-300 mb-3 font-medium">
+
+                        Leave Reason
+
+                    </label>
+
+                    <textarea
+                            th:field="*{reason}"
+                            placeholder="Describe your leave reason..."
+                            rows="5"
+                            class="input-style w-full p-4 rounded-2xl resize-none"></textarea>
+
+                </div>
+
+                <!-- DATES -->
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- START DATE -->
+
+                    <div>
+
+                        <label class="block text-slate-300 mb-3 font-medium">
+
+                            Start Date
+
+                        </label>
+
+                        <input type="date"
+                               th:field="*{startDate}"
+                               class="input-style w-full p-4 rounded-2xl">
+
+                    </div>
+
+                    <!-- END DATE -->
+
+                    <div>
+
+                        <label class="block text-slate-300 mb-3 font-medium">
+
+                            End Date
+
+                        </label>
+
+                        <input type="date"
+                               th:field="*{endDate}"
+                               class="input-style w-full p-4 rounded-2xl">
+
+                    </div>
+
+                </div>
+
+                <!-- BUTTON -->
+
+                <button type="submit"
+                        class="w-full bg-gradient-to-r from-sky-500 to-blue-600 hover:scale-[1.02] transition-all duration-300 py-5 rounded-2xl font-semibold text-lg shadow-2xl">
+
+                    Submit Leave Request
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
